@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import UserTable from './tables/UserTable.js'
+import UserTable from './tables/UserTable'
+import AddUserForm from './Forms/AddUserForm.js'
 import { Row } from 'reactstrap'
 
 function App() {
@@ -10,21 +11,27 @@ function App() {
     { id: 3, name: 'Fin', username: 'testname2'}
   ]
 
-  const [users, usersData] = useState(usersData)
+  const [users, setUsers] = useState(usersData)
+
+  const addUser = user => {
+    user.id = user.length + 1
+    setUsers([...users, user])
+  }
 
   return (
     <div className="App">
-      <h1 className='text-center mb-5'>CRUD app + hooks</h1>
-      <hr/>
       <div className='d-flex-row justify-content-center text-center mb-5'>
         <div className='d-flex justify-content-center p-2'>
           <h3 className='pr-3'>Add user</h3>
           <h3 className='pl-3'>View users</h3>
         </div>
-        <hr/>
       </div>
       <Row className='justify-content-center mt-2'>
-        <UserTable/>
+        <UserTable users={users} />
+      </Row>
+
+      <Row className='justify-content-center mt-2'>
+        <AddUserForm addUser={addUser} />
       </Row>
     </div>
   );
